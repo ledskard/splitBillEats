@@ -21,6 +21,7 @@ public class OrderController {
     this.orderService = orderService;
   }
 
+  @CrossOrigin
   @PostMapping
   public ResponseEntity<PaymentSplitDto> createOrder(@RequestBody @Valid OrderDto orderDto) {
     try {
