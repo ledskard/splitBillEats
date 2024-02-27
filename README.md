@@ -1,3 +1,5 @@
+O frontend está bem simples em HTML e JS puro, está na pasta frontend na raiz do projeto.
+
 - Curl da requisição
 
 curl --location 'localhost:8080/orders' \
