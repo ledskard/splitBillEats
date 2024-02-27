@@ -34,6 +34,34 @@ function addItem(userIndex) {
     itemsContainer.appendChild(itemDiv);
 }
 
+function displayResponse(data) {
+  const responseContainer = document.getElementById('response');
+  responseContainer.innerHTML = ''; // Limpa a resposta anterior
+
+  // Cria o resumo do pedido
+  let summaryHtml = `
+      <div class="summary">
+          <h3>Resumo do Pedido</h3>
+          <p>Total Antes de Descontos e Taxas: <strong>${data.totalBeforeDiscountsAndFees}</strong></p>
+          <p>Total do Pedido: <strong>${data.totalOrderAmount}</strong></p>
+      </div>
+  `;
+
+  // Processa cada pagamento dos participantes
+  data.participantPayments.forEach(participant => {
+      summaryHtml += `
+          <div class="participant">
+              <h4>${participant.name}</h4>
+              <p>Valor Devido: <strong>${participant.amountDue}</strong></p>
+              <p>Itens: <strong>${participant.items.join(', ')}</strong></p>
+              <a href="${participant.paymentLink}" target="_blank">Link para Pagamento</a>
+          </div>
+      `;
+  });
+
+  // Adiciona o HTML formatado ao container de resposta
+  responseContainer.innerHTML = summaryHtml;
+}
 document.getElementById('addUser').addEventListener('click', addUser);
 
 document.getElementById('orderForm').addEventListener('submit', function(event) {
@@ -79,8 +107,8 @@ document.getElementById('orderForm').addEventListener('submit', function(event) 
   })
   .then(response => response.json())
   .then(data => {
-      document.getElementById('response').textContent = JSON.stringify(data, null, 2);
-  })
+    displayResponse(data); // Chama a nova função para exibir os dados
+})
   .catch((error) => {
     console.error('Erro:', error);
     document.getElementById('response').textContent = 'Falha ao enviar pedido: ' + error.message;

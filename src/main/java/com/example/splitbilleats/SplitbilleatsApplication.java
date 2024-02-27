@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SplitbilleatsApplication {
 
   public static void main(String[] args) {
-    System.out.println("heelo world");
     SpringApplication.run(SplitbilleatsApplication.class, args);
   }
 
